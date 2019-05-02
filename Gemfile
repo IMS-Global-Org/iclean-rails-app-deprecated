@@ -28,6 +28,14 @@ gem 'bootsnap', '>= 1.1.0', require: false
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
 
+# Installation Notes
+# => bundle exec rails g devise:install
+# => bundle exec rails g devise_token_auth:install
+# => bundle exec rake db:drop db:create db:migrate
+gem 'devise'
+gem 'devise_token_auth'
+gem 'oauth'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
