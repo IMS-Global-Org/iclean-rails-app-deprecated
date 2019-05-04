@@ -36,5 +36,26 @@ class AccessPolicy
     #  can :read, Post
     #  can :read, Comment
     # end
+    role :super, is_super?: true do
+    end
+
+    role :admin, is_admin?: true do
+    end
+
+    role :employer, is_employer?: true do
+    end
+
+    role :employee, is_employee?: true do
+    end
+
+    role :member, is_member?: true do
+    end
+
+    role :guest, is_guest?: true do
+    end
+
+    role :visitor do
+    end
+
   end
 end
