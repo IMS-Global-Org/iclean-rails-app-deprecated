@@ -23,4 +23,7 @@ class User < ActiveRecord::Base
   before_create do
     self.role = User.roles[:visitor]
   end
+
+  # Associations
+  has_many :addresses, as: :addressable
 end
