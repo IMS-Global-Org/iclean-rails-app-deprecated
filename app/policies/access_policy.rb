@@ -49,6 +49,7 @@ class AccessPolicy
     end
 
     role :member, is_member?: true do
+      can :manage, Address
     end
 
     role :guest, is_guest?: true do
