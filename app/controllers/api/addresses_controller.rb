@@ -4,15 +4,13 @@ class Api::AddressesController < ApplicationController
   before_action :set_address, only: [:show, :update, :destroy]
 
   def index
-    render json: Address.all
+    # authorize! :index, Address
+    render json: current_user.addresses.all
   end
 
   def show
+    # authorize! :show, Address
     render json: @address
-  end
-
-  def for_user
-    render json: current_user.addresses.first
   end
 
   def create
@@ -26,6 +24,7 @@ class Api::AddressesController < ApplicationController
   end
 
   def update
+    # authorize! :update, Address
     if @address.update(address_params)
       render json: @address
     else
@@ -34,6 +33,7 @@ class Api::AddressesController < ApplicationController
   end
 
   def destroy
+    # authorize! :destroy, Address
     render json: @address.destroy
   end
 
@@ -41,17 +41,19 @@ class Api::AddressesController < ApplicationController
 
   def address_params
     params.require(:address).permit(
-      :street1,
-      :street2,
+      :id,
+      :street_1,
+      :street_2,
       :city,
       :state,
       :zipcode,
       :country,
+      :address_type,
     )
   end
 
   def set_address
-    @address = Address.find(params[:id])
+    @address = current_user.addresses.find(params[:id])
   end
 
 end
