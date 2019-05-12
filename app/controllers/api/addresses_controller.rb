@@ -42,8 +42,8 @@ class Api::AddressesController < ApplicationController
   def address_params
     params.require(:address).permit(
       :id,
-      :street_1,
-      :street_2,
+      :street1,
+      :street2,
       :city,
       :state,
       :zipcode,
