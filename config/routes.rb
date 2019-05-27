@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   namespace :api do
     resources :users, only: [] do
       resources :addresses
+      patch :reset_password, on: :member
     end
   end
 
