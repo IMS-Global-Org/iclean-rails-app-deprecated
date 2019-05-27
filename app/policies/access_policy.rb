@@ -36,10 +36,17 @@ class AccessPolicy
     #  can :read, Post
     #  can :read, Comment
     # end
+    #
+
+    # NOTE:
+    # Roles inherit from less important roles below them,
+    #    but only from roles which apply to the given user.
+    #    So we only need to add additional permissions on top of them.
     role :super, is_super?: true do
     end
 
     role :admin, is_admin?: true do
+      can :manage, Address
     end
 
     role :employer, is_employer?: true do

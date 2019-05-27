@@ -1,20 +1,20 @@
 class Api::AddressesController < ApplicationController
-  # TODO set access granted permission
   before_action :authenticate_user!
   before_action :set_address, only: [:show, :update, :destroy]
 
   def index
-    # authorize! :index, Address
-    render json: current_user.addresses.all
+    @addresses = current_user.addresses.all
+    authorize! :read, @addresses.first
+    render json: @addresses
   end
 
   def show
-    # authorize! :show, Address
+    authorize! :show, Address
     render json: @address
   end
 
   def create
-    # authorize! :create, Address
+    authorize! :create, Address
     address = current_user.addresses.new(address_params)
     if address.save
       render json: address
@@ -24,7 +24,7 @@ class Api::AddressesController < ApplicationController
   end
 
   def update
-    # authorize! :update, Address
+    authorize! :update, Address
     if @address.update(address_params)
       render json: @address
     else
@@ -33,7 +33,7 @@ class Api::AddressesController < ApplicationController
   end
 
   def destroy
-    # authorize! :destroy, Address
+    authorize! :destroy, Address
     render json: @address.destroy
   end
 

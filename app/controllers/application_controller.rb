@@ -5,7 +5,7 @@ class ApplicationController < ActionController::API
   # @param model [ActiveRecord] any ActiveRecord model
   # @return [String] json formatted string respresentation of the model
   def render_errors(model)
-    render json: { errors: model.errors.full_messages.join(',\n')}, status: 422
+    render json: { errors: model.errors.full_messages.join(',\n')}, status: :unprocessable_entity
   end
 
   # Helper method - takes a paginated model by will_paginate and creates
@@ -33,7 +33,8 @@ class ApplicationController < ActionController::API
     @current_policy ||= ::AccessPolicy.new(User.find(current_user.id))
   end
 
+  # Rescue from failed permissions thrown from Access Granted
   rescue_from AccessGranted::AccessDenied do |exception|
-    redirect_to '/', alert: "You don't have permissions to access this page."
+    render json: {  errors: "Access Not Granted for User's Role!" }, status: :unprocessable_entity
   end
 end

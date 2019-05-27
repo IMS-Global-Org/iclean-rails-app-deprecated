@@ -6,4 +6,11 @@ class Address < ApplicationRecord
     work: 5,
     other: 10,
   }, _prefix: :is
+
+  validates :street1, presence: true
+  validates :city, presence: true
+  validates :state, presence: true
+  validates :zipcode, presence: true
+  validates :country, presence: true
+  validates :address_type, presence: true
 end
