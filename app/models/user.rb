@@ -26,4 +26,5 @@ class User < ActiveRecord::Base
 
   # Associations
   has_many :addresses, as: :addressable
+  has_one :demographic
 end
