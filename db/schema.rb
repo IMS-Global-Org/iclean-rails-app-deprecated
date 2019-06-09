@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_10_224024) do
+ActiveRecord::Schema.define(version: 2019_06_03_032251) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,58 @@ ActiveRecord::Schema.define(version: 2019_05_10_224024) do
     t.datetime "updated_at", null: false
     t.integer "address_type", default: 0
     t.index ["addressable_type", "addressable_id"], name: "index_addresses_on_addressable_type_and_addressable_id"
+  end
+
+  create_table "answers", force: :cascade do |t|
+    t.bigint "question_id"
+    t.string "text"
+    t.integer "answer_type"
+    t.string "answerable_type"
+    t.bigint "answerable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["answerable_type", "answerable_id"], name: "index_answers_on_answerable_type_and_answerable_id"
+    t.index ["question_id"], name: "index_answers_on_question_id"
+  end
+
+  create_table "demographics", force: :cascade do |t|
+    t.bigint "user_id"
+    t.integer "age"
+    t.integer "gender"
+    t.integer "ethnicity"
+    t.integer "race"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_demographics_on_user_id"
+  end
+
+  create_table "phycographics", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_phycographics_on_user_id"
+  end
+
+  create_table "psychographics", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_psychographics_on_user_id"
+  end
+
+  create_table "questions", force: :cascade do |t|
+    t.string "text"
+    t.string "hint"
+    t.integer "question_type"
+    t.string "questionable_type"
+    t.bigint "questionable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["questionable_type", "questionable_id"], name: "index_questions_on_questionable_type_and_questionable_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -61,4 +113,7 @@ ActiveRecord::Schema.define(version: 2019_05_10_224024) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
+  add_foreign_key "answers", "questions"
+  add_foreign_key "phycographics", "users"
+  add_foreign_key "psychographics", "users"
 end

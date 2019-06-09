@@ -1,6 +1,7 @@
 class CreateDemographics < ActiveRecord::Migration[5.2]
   def change
     create_table :demographics do |t|
+      t.belongs_to :user
       t.integer :age
       t.integer :gender
       t.integer :ethnicity

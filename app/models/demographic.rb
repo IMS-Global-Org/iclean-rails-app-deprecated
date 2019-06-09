@@ -3,8 +3,14 @@ class Demographic < ApplicationRecord
   belongs_to :user
 
   # Standard Column Enums
-  enum gender: { male: 0, female: 5, other: 10 }, _prefix: :is
-  enum ethnicity: {}, _prefix: :is
+  enum gender: { male: 0, female: 5, other_gender: 10 }, _prefix: :is
+  enum ethnicity: {
+    not_hispanic_latin_or_spanish: 0,
+    mexican_mexican_american_chicano: 5,
+    puerto_rican: 10,
+    cuban: 15,
+    other_ethnicity: 20,
+  }, _prefix: :is
   enum race: {
     white: 0,
     black: 5,
@@ -14,11 +20,7 @@ class Demographic < ApplicationRecord
     asian: 25,
     native_hawaiian: 30,
     other_pacific_islander: 35,
-    }, _prefix: :is
+    other_race: 40,
+  }, _prefix: :is
 
-  # Validations
-  validates :age
-  validates :gender
-  validates :ethnicity
-  validates :race
 end

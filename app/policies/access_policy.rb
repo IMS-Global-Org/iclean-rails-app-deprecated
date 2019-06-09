@@ -48,6 +48,9 @@ class AccessPolicy
     role :admin, is_admin?: true do
       can :manage, Address
       can :manage, User
+      can :manage, Demographic
+      can :manage, Psychographic
+      can :manage, Question
     end
 
     role :employer, is_employer?: true do
@@ -59,6 +62,9 @@ class AccessPolicy
     role :member, is_member?: true do
       can :manage, Address
       can :manage, User
+      can :manage, Demographic
+      can [:read], Psychographic
+      can [:read], Question
     end
 
     role :guest, is_guest?: true do
