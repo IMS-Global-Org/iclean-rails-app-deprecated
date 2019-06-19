@@ -1,17 +1,23 @@
+# == Schema Information
+#
+# Table name: questions
+#
+#  id                :bigint           not null, primary key
+#  text              :string
+#  hint              :string
+#  exam_id           :bigint
+#  questionable_type :string
+#  questionable_id   :bigint
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#
+
 class Question < ApplicationRecord
   belongs_to :questionable, polymorphic: true
-  has_many :answers, as: :answerable, dependent: :delete_all
+  belongs_to :exam
+  has_many :answers, dependent: :destroy
 
   validates :text, presence: true
-  validates :question_type, presence: true
+  validates :exam, presence: true
 
-  enum question_type: {
-    input: 0,
-    textarea: 5,
-    checkbox: 10,
-    radio: 15,
-    select: 20,
-    number: 25,
-    yes_no: 30,
-  }, _prefix: :is
 end

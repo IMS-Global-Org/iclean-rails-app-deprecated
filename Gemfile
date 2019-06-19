@@ -45,6 +45,7 @@ group :development, :test do
   gem 'letter_opener'
   gem 'pry-byebug'
   gem 'rspec-rails', '~> 3.8'
+  gem 'annotate'
 end
 
 group :development do

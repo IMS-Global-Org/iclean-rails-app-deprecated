@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_03_032251) do
+ActiveRecord::Schema.define(version: 2019_06_02_193701) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,15 +31,13 @@ ActiveRecord::Schema.define(version: 2019_06_03_032251) do
   end
 
   create_table "answers", force: :cascade do |t|
+    t.bigint "user_id"
     t.bigint "question_id"
-    t.string "text"
-    t.integer "answer_type"
-    t.string "answerable_type"
-    t.bigint "answerable_id"
+    t.integer "answer"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["answerable_type", "answerable_id"], name: "index_answers_on_answerable_type_and_answerable_id"
     t.index ["question_id"], name: "index_answers_on_question_id"
+    t.index ["user_id"], name: "index_answers_on_user_id"
   end
 
   create_table "demographics", force: :cascade do |t|
@@ -53,33 +51,29 @@ ActiveRecord::Schema.define(version: 2019_06_03_032251) do
     t.index ["user_id"], name: "index_demographics_on_user_id"
   end
 
-  create_table "phycographics", force: :cascade do |t|
+  create_table "exams", force: :cascade do |t|
     t.string "title"
     t.text "description"
-    t.bigint "user_id"
+    t.string "icon", limit: 20
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_phycographics_on_user_id"
-  end
-
-  create_table "psychographics", force: :cascade do |t|
-    t.string "title"
-    t.text "description"
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_psychographics_on_user_id"
   end
 
   create_table "questions", force: :cascade do |t|
     t.string "text"
     t.string "hint"
-    t.integer "question_type"
+    t.bigint "exam_id"
     t.string "questionable_type"
     t.bigint "questionable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["exam_id"], name: "index_questions_on_exam_id"
     t.index ["questionable_type", "questionable_id"], name: "index_questions_on_questionable_type_and_questionable_id"
+  end
+
+  create_table "user_exams", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -114,6 +108,5 @@ ActiveRecord::Schema.define(version: 2019_06_03_032251) do
   end
 
   add_foreign_key "answers", "questions"
-  add_foreign_key "phycographics", "users"
-  add_foreign_key "psychographics", "users"
+  add_foreign_key "answers", "users"
 end

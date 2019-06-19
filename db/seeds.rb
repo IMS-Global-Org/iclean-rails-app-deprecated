@@ -6,23 +6,44 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-user = User.first
-Psychographic.destroy_all
+# Seed Development Environment User
+User.destroy_all
+user = User.create(
+  email: 'iclean.dev@iclean.com',
+  password: 'password',
+  password_confirmation: 'password',
+)
+user.update(role: 'admin')
 
 
-# load psychographic test strings
-(0..5).to_a.each do
+# Seed Demographic info for User
+Demographic.destroy_all
+Demographic.create(age: 44, user: user, gender: 'male', ethnicity: 'other_ethnicity', race: 'white')
+
+
+# Seed Exam, Questions and Answers
+Exam.destroy_all
+Question.destroy_all
+Answer.destroy_all
+
+(0..2).each do
   # Create a set of test/quizes 
-  psycho = user.psychographics.create({
+  exam = Exam.create({
     title: Faker::Lorem.sentence,
-    description: Faker::Lorem.paragraph(6)
+    description: Faker::Lorem.paragraph(6),
+    icon: 'exam'
   })
-  # create the actual test/quiz types and descriptions
-  (0..10).to_a.each do
-    psycho.questions.create({
+  # seed questions for exam
+  (0..5).each do
+    question = exam.questions.create({
       text: Faker::Lorem.sentence,
       hint: Faker::Lorem.sentence,
-      question_type: Question.question_types.keys.sample,
     })
+    # seed answers for question
+    Answer.create(
+      user: user,
+      question: question,
+      answer: Answer.answers.keys.sample
+    )
   end
 end

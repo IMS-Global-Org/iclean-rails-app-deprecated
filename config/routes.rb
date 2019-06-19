@@ -15,7 +15,29 @@ Rails.application.routes.draw do
 
       resources :psychographics do
         resources :questions
-        resources :answers
+        resources :answers do
+          collection do
+            patch :batch_yes_no
+            get :batch_show
+            delete :batch_destroy
+          end
+        end
+      end
+
+      # Exams for a User
+      resources :user_exams
+
+      # Exams, Questions and Answers
+      resources :exams do
+        resources :questions do
+          resources :answers do
+            collection do
+              get :batch, action: :get_batch
+              post :batch, action: :post_batch
+              patch :batch, action: :patch_batch
+            end
+          end
+        end
       end
     end
 
