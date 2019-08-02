@@ -62,12 +62,10 @@ ActiveRecord::Schema.define(version: 2019_06_02_193701) do
   create_table "questions", force: :cascade do |t|
     t.string "text"
     t.string "hint"
-    t.bigint "exam_id"
     t.string "questionable_type"
     t.bigint "questionable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["exam_id"], name: "index_questions_on_exam_id"
     t.index ["questionable_type", "questionable_id"], name: "index_questions_on_questionable_type_and_questionable_id"
   end
 

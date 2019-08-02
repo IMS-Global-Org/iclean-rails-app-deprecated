@@ -4,7 +4,6 @@ class CreateQuestions < ActiveRecord::Migration[5.2]
       t.string :text
       t.string :hint
 
-      t.belongs_to :exam
       t.references :questionable, polymorphic: true, index: true
 
       t.timestamps

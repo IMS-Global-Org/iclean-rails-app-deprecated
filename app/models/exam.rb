@@ -15,5 +15,6 @@ class Exam < ApplicationRecord
 
   validates :title, presence: true
   validates :description, presence: true
+  validates :examable, presence: true
   validates :icon, presence: true
 end

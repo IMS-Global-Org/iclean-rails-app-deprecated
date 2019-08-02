@@ -17,7 +17,6 @@ user.update(role: 'admin')
 
 
 # Seed Demographic info for User
-Demographic.destroy_all
 Demographic.create(age: 44, user: user, gender: 'male', ethnicity: 'other_ethnicity', race: 'white')
 
 
@@ -28,17 +27,18 @@ Answer.destroy_all
 
 (0..2).each do
   # Create a set of test/quizes 
-  exam = Exam.create({
+  exam = Exam.create(
     title: Faker::Lorem.sentence,
     description: Faker::Lorem.paragraph(6),
+    examable: psychographic,
     icon: 'exam'
-  })
+  )
   # seed questions for exam
   (0..5).each do
-    question = exam.questions.create({
+    question = exam.questions.create(
       text: Faker::Lorem.sentence,
       hint: Faker::Lorem.sentence,
-    })
+    )
     # seed answers for question
     Answer.create(
       user: user,
